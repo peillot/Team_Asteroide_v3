@@ -9,6 +9,8 @@ class Partie:
 
     def control(self):
         self.joueur.deplacement()
+        self.joueur.show()
+
 
     def show(self):
-        self.map.show()
+        pass

@@ -11,7 +11,7 @@ class Player:
         self.vMax = 10
         self.accMax = 5
         self.taille = 35
-        self.pos = Vector2(280,220)
+        self.pos = Vector2()
         self.acc = Vector2()
         self.vitesse = Vector2 (0,-1)
         self.color = (255,255,255)
@@ -20,7 +20,21 @@ class Player:
 
     def deplacement(self):
         if core.getKeyPressList("a"):
+            self.acc = Vector2(0.5,0)
+            self.vitesse +=self.acc
+            self.pos += self.vitesse
+            print("appuie")
 
+        if core.getKeyPressList("z"):
+            self.acc = Vector2(-0.5,0)
+            self.vitesse +=self.acc
+            self.pos += self.vitesse
+            print("appuie")
+
+        if core.getKeyPressList("m"):
+            self.acc = Vector2(0,-2)
+            self.vitesse +=self.acc
+            self.pos += self.vitesse
             print("appuie")
 
     def tirer(self):
@@ -30,16 +44,16 @@ class Player:
         pass
 
     def show(self):
-        #core.Draw.text(self.color, "A", (280,200), self.taille)
+        self.pos = Vector2(280,220)
         p1 =  self.vitesse.rotate(90)
         p1.scale_to_length(10)
-        p1+=self.pos
+        p1+= self.pos
         p3 = self.vitesse.rotate(-90)
         p3.scale_to_length(10)
         p3+=self.pos
         p2 = Vector2(self.vitesse)
         p2.scale_to_length(20)#Sommet du triangle
-        p2=self.pos+p2
+        p2+=self.pos
 
         core.Draw.polygon(self.color,((p1), (p2), (p3)))
 

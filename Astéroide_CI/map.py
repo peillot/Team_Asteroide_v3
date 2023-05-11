@@ -20,6 +20,5 @@ class Map:
     def spawn_soucoupe(self):
         pass
     def show(self):
-        self.joueur.show()
-
-
+        #self.joueur.show()
+        pass
