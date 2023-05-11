@@ -45,7 +45,6 @@ class Player:
         pass
 
     def show(self):
-        #self.pos = Vector2(280,220)
         p1 =  self.orientation.rotate(90)
         p1.scale_to_length(10)
         p1+=self.pos

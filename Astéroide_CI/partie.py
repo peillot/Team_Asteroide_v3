@@ -7,12 +7,14 @@ from Astéroide_CI.player import Player
 class Partie:
     def __init__(self):
         self.map = Map()
-        self.joueur = Player("J1", 280,220)
+        self.joueur = Player("J1", 400,250)
 
 
     def control(self):
         self.joueur.deplacement()
-        self.joueur.show()
+
 
     def show(self):
-        self.map.spawn_asteroide()
+        self.joueur.show()
+        self.map.show()
+        #self.map.spawn_asteroide()

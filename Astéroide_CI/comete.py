@@ -1,3 +1,5 @@
+from pygame import Vector2
+
 import core
 
 
@@ -7,14 +9,17 @@ class Comete:
         self.taille1 = 30
         self.taille2 = 20
         self.taille3 = 10
-        self.vitesseMax = 10
-        self.accMax = 5
+        self.vitesse = Vector2()
+        self.acc = Vector2()
+        self.position = Vector2()
+        self.dureeDeVie = 3
 
     def collide(self):
         pass
 
     def deplacement(self):
-        pass
+        self.vitesse += self.acc
+        self.position += self.vitesse
 
     def draw(self):
-        core.Draw.circle((88,41,0), (100,100), self.taille1)
+        core.Draw.circle((88,41,0), self.position, self.taille1)
