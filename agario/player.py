@@ -22,14 +22,14 @@ class Player:
     def deplacement(self):
         if self.bot== False:
             if core.getMouseRightClick():
-            k=0.01
-            u=1
-            l=
-            lo=0.01
-            Fa=k*u*(l-lo)
-            self.acc=Fa
-            self.vitesse=self.vitesse+self.acc
-            self.position=self.position+self.vitesse
+                k=0.01
+                u=1
+                l=0
+                lo=0.01
+                Fa=k*u*(l-lo)
+                self.acc=Fa
+                self.vitesse=self.vitesse+self.acc
+                self.position=self.position+self.vitesse
 
 
     def grandir(self):

@@ -8,8 +8,8 @@ import core
 def setup():
     print("Setup START---------")
     core.fps = 60
-    core.WINDOW_SIZE = [400, 400]
-    core.memory("texture",core.Texture("./soleil.png",Vector2(200,200)))
+    core.WINDOW_SIZE = [200, 200]
+    core.memory("texture",core.Texture("./IMG_1774.png",Vector2(50,50)))
 
     print("Setup END-----------")
 
@@ -20,10 +20,10 @@ def run():
         core.memory("texture").load()
 
 
-    if core.getKeyPressList("b"):
-        core.memory("texture").box = not core.memory("texture").box
-        time.sleep(0.1)
-        core.memory("texture").angle+=5
+    #if core.getKeyPressList("b"):
+        #core.memory("texture").box = not core.memory("texture").box
+        #time.sleep(0.1)
+        core.memory("texture").angle+=90
     core.memory("texture").show()
 
 core.main(setup, run)

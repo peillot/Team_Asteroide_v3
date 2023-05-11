@@ -1,9 +1,10 @@
+import pygame.image
 from pygame.rect import Rect
 
 import core
 from Astéroide_CI import etat
-from Astéroide_CI.Partie import Partie
-from Astéroide_CI.Partie import Player
+from Astéroide_CI.partie import Partie
+from Astéroide_CI.partie import Player
 from Astéroide_CI.etat import Etat
 
 
@@ -20,9 +21,11 @@ def afficherMENU():
 
 
 def afficherJEU():
-    core.memory("partie", Partie())
-    core.memory("partie").show()
+
+
     core.memory("partie").control()
+    core.memory("partie").show()
+
 
 
 
@@ -33,9 +36,9 @@ def afficherGAMEOVER():
 def setup():
     print("Start setup")
     core.WINDOW_SIZE = [600, 400]
-    core.fps = 60
+    core.fps = 30
     core.memory("etat", Etat.MENU)
-
+    core.memory("partie", Partie())
     print("End setup")
 
 
