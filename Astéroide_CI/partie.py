@@ -21,4 +21,3 @@ class Partie:
         self.map.show(self.choix)
         self.joueur.show()
         self.joueur.showVie()
-
