@@ -8,8 +8,8 @@ import core
 def setup():
     print("Setup START---------")
     core.fps = 60
-    core.WINDOW_SIZE = [200, 200]
-    core.memory("texture",core.Texture("./IMG_1774.png",Vector2(50,50)))
+    core.WINDOW_SIZE = [800, 800]
+    core.memory("texture",core.Texture("./IMG_1774.png",Vector2(600,400)))
 
     print("Setup END-----------")
 

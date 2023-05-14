@@ -1,3 +1,5 @@
+import random
+
 import core
 from Astéroide_CI.comete import Comete
 from Astéroide_CI.map import Map
@@ -7,7 +9,8 @@ from Astéroide_CI.player import Player
 class Partie:
     def __init__(self):
         self.map = Map()
-        self.joueur = Player("J1", 400,250)
+        self.joueur = Player("J1", 370,210)
+        self.choix = random.randint(1,2)
 
 
     def control(self):
@@ -15,6 +18,7 @@ class Partie:
 
 
     def show(self):
+        self.map.show(self.choix)
         self.joueur.show()
-        self.map.show()
-        #self.map.spawn_asteroide()
+        self.joueur.showVie()
+
