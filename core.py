@@ -1,7 +1,6 @@
 import copy
 import inspect
 import sys
-import threading
 from math import *
 from random import *
 
@@ -112,8 +111,7 @@ def getkeyPressValue():
 def getkeyRelease():
     return keyReleaseValue
 
-def getMouseLocation():
-    return pygame.mouse.get_pos()
+
 def setup():
     pygame.init()
     global WINDOW_SIZE
