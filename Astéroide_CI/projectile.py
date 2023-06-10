@@ -19,7 +19,7 @@ class Projectile:
         self.position = Vector2()
         self.dureeDeVie = 1.5
         self.startTime = time.time()
-        self.comete = Comete()
+        #self.comete = Comete()
 
 
     def draw(self):

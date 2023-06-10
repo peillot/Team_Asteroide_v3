@@ -11,14 +11,7 @@ from Astéroide_CI.projectile import Projectile
 
 class Map:
     def __init__(self):
-        self.maxPlayer = 1
-        self.maxAsteroide = 5
-        self.maxSoucoupe = 2
         self.taille = Vector2(core.WINDOW_SIZE)
-        self.joueur = Player()
-        self.aste = Comete()
-        self.soucoupe = []
-        core.memory("mesProjectiles", [])
 
 
     def show(self,map):

@@ -14,7 +14,7 @@ class Comete:
         self.accMax = 2
         self.vitesseMax = 1
         self.position = Vector2(x,y)
-        self.dureeDeVie = 3
+
 
     def collision_projectile(self, projectile):
         dist = self.position.distance_to(projectile.position)
