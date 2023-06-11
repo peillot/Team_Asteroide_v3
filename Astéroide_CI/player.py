@@ -10,23 +10,23 @@ class Player:
     def __init__(self, j="J0", x=10, y=300):
         self.nom: j
         self.vitesseMax = 5
-        self.accMax = 2
+        self.accMax = 3
         self.pos = Vector2(x,y)
         self.acc = Vector2()
         self.vitesse = Vector2(1,0)
         self.orientation = Vector2(0, -1) #permet de dessiner le triangle et pouvoir deplacer le joueur
         self.frottement = Vector2()
-        self.color = (255,255,255)
+        self.color = (255,0,0)
         self.nbVie = 3
-        self.posVie = Vector2(700,30)
+        #self.posVie = Vector2(700,30)
         self.rayon = 40
-        # self.score
+        #self.score = 0
 
     def deplacement(self):
-        if self.acc.length()>self.accMax:
-            self.acc.scale_to_length(self.accMax)
 
-        if self.vitesse.length()>self.vitesseMax:
+        if self.acc.length() > self.accMax:
+            self.acc.scale_to_length(self.accMax)
+        if self.vitesse.length() > self.vitesseMax:
             self.vitesse.scale_to_length(self.vitesseMax)
 
         if core.getKeyPressList("a"): #Tourner a gauche
@@ -85,34 +85,34 @@ class Player:
 
     def showVie(self): #Affichage des vies:
         if self.nbVie == 3:
-            core.memory("texture", core.Texture("./vaisseau.png", (750,10), 0, (45,45)))
+            core.memory("texture", core.Texture("./coeur_vie.png", (750,10), 0, (45,45)))
             if not core.memory("texture").ready:
                 core.memory("texture").load()
                 core.memory("texture").show()
 
-            core.memory("texture", core.Texture("./vaisseau.png", (700,10), 0, (45,45)))
+            core.memory("texture", core.Texture("./coeur_vie.png", (710,10), 0, (45,45)))
             if not core.memory("texture").ready:
                 core.memory("texture").load()
                 core.memory("texture").show()
 
-            core.memory("texture", core.Texture("./vaisseau.png", (650,10), 0, (45,45)))
+            core.memory("texture", core.Texture("./coeur_vie.png", (670,10), 0, (45,45)))
             if not core.memory("texture").ready:
                 core.memory("texture").load()
                 core.memory("texture").show()
 
         if self.nbVie == 2:
-            core.memory("texture", core.Texture("./vaisseau.png", (750, 10), 0, (45, 45)))
+            core.memory("texture", core.Texture("./coeur_vie.png", (750, 10), 0, (45, 45)))
             if not core.memory("texture").ready:
                 core.memory("texture").load()
                 core.memory("texture").show()
 
-            core.memory("texture", core.Texture("./vaisseau.png", (700, 10), 0, (45, 45)))
+            core.memory("texture", core.Texture("./coeur_vie.png", (700, 10), 0, (45, 45)))
             if not core.memory("texture").ready:
                 core.memory("texture").load()
                 core.memory("texture").show()
 
         if self.nbVie == 1:
-            core.memory("texture", core.Texture("./vaisseau.png", (750, 10), 0, (45, 45)))
+            core.memory("texture", core.Texture("./coeur_vie.png", (750, 10), 0, (45, 45)))
             if not core.memory("texture").ready:
                 core.memory("texture").load()
                 core.memory("texture").show()

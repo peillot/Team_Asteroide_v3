@@ -14,14 +14,8 @@ class Map:
         self.taille = Vector2(core.WINDOW_SIZE)
 
 
-    def show(self,map):
+    def show(self):
 
-        if map ==1:
-            core.memory("texture", core.Texture("./Galaxie.jpg", Vector2(0, 0), 0, [800, 500]))
-            if not core.memory("texture").ready:
-                core.memory("texture").load()
-            core.memory("texture").show()
-        if map == 2:
             core.memory("texture", core.Texture("./Galaxie_noir.png", Vector2(0, 0), 0, [800, 500]))
             if not core.memory("texture").ready:
                 core.memory("texture").load()

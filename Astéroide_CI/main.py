@@ -13,11 +13,12 @@ from Astéroide_CI.etat import Etat
 from Astéroide_CI.projectile import Projectile
 
 
-def creationComete(position_x,position_y, rayon):
+def creationComete(position_x,position_y, rayon, vitesseMax):
     aste = Comete() #Creation asteroide par defaut avec toute les valeurs du constructeur
     aste.position = Vector2(position_x,position_y)
     aste.acc = Vector2(random.uniform(-1,1), random.uniform(-1,1)) #On attribut une acceleration aleatoire
     aste.rayon = rayon
+    aste.vitesseMax = vitesseMax
     core.memory("mesCometes").append(aste) #Je l'ajoute a la liste d'asteroides
 
 def creationProjectile():
@@ -71,6 +72,7 @@ def afficherMENU():
             core.Draw.text((255, 255, 0), "EXIT", (70, 450), 30, "Bauhaus 93")
 
 def afficherJEU():
+
     core.memory("partie").control()
     core.memory("partie").show()
     #core.Draw.rect((250, 250, 250), (0, 350, 40, 40))  # CP
@@ -89,21 +91,18 @@ def afficherJEU():
         c.deplacement()
 
 
-
+    #Création des projectiles
     if core.getKeyPressList("SPACE"):
         if len(core.memory("mesProjectiles"))>0: #Comparaison de la longueur de la liste vide ou pas
             if time.time() - core.memory("mesProjectiles")[-1].startTime>0.2: #Je verifie que le dernier projectile a ete lance il y a 0.2ms
                 creationProjectile()
-                print("projectile")
         else:
             creationProjectile() #Comme la liste est vide on cree dans tt les cas un projectile
-            print("Projectile par defaut")
 
     #Disparition des projectiles
     for p in core.memory("mesProjectiles"):
         if time.time() - p.startTime > p.dureeDeVie: #Le temps qu'il - le temps de creation superieur a la duree de vie
             core.memory("mesProjectiles").remove(p)
-
 
      #Afficher les projectiles
     for p in core.memory("mesProjectiles"):
@@ -116,8 +115,8 @@ def afficherJEU():
             res = c.collision_projectile(p)
             if res:
                 if c.rayon >20:
-                    creationComete(p.position.x, p.position.y, c.rayon/2)
-                    creationComete(p.position.x, p.position.y, c.rayon / 2)
+                    creationComete(p.position.x, p.position.y, c.rayon/2, c.vitesseMax+2)
+                    creationComete(p.position.x, p.position.y, c.rayon / 2, c.vitesseMax+2)
                     if c.rayon == 50:
                         compteur +=30
                     else:
@@ -128,6 +127,23 @@ def afficherJEU():
                 core.memory("mesCometes").remove(c)
                 core.memory("score",compteur)
 
+    if not core.memory("mesCometes"):
+        for i in range(0, 6):  # création de seulement 5 comètes
+            alea = random.randint(0, 3)  # Generation nombre aleatoire pr les zones de spawn
+            if alea == 0:  # afficher les asteroides en haut
+                position_x = random.randint(0, 800)
+                position_y = -10
+            if alea == 1:  # afficher les ateroides en Bas
+                position_x = random.randint(0, 800)
+                position_y = 510
+            if alea == 2:  # afficher les asteroides a Gauche
+                position_x = -10
+                position_y = random.randint(0, 500)
+            if alea == 3:  # afficher les asteroides a Droite
+                position_x = 810
+                position_y = random.randint(0, 500)
+            creationComete(position_x, position_y, 50, 1)  # Creation asteroide avec les coordonnée x,y calculé avant
+        print("liste vide")
 
     #Tester les collisions asteroides et vaisseau et perdre de la vie
     for c in core.memory("mesCometes"):
@@ -136,15 +152,14 @@ def afficherJEU():
             core.memory("partie").joueur.nbVie -= 1 #On retire une vie des qu'on touche un asteroide
 
             if c.rayon > 20: #Division des asteroides
-                creationComete(c.position.x, c.position.y, c.rayon / 2)
-                creationComete(c.position.x, c.position.y, c.rayon / 2)
+                creationComete(c.position.x, c.position.y, c.rayon / 2, c.vitesseMax+2)
+                creationComete(c.position.x, c.position.y, c.rayon / 2, c.vitesseMax+2)
             core.memory("mesCometes").remove(c) #Disparition des asteroides
             core.memory("partie").joueur.pos = Vector2(400,250)#Remettre le joueur a sa place
 
             if core.memory("partie").joueur.nbVie == 0: #Si on a plus de vie alors game over
-                core.memory("partie").joueur.nbVie = 3
-                compteur = (core.memory("score"))
                 core.memory("etat", Etat.GAMEOVER)
+
 
     core.Draw.text((255, 255, 255), str(core.memory("score")), (100, 1), 25, "Arial")
 
@@ -168,12 +183,68 @@ def afficherGAMEOVER():
         position = core.getMouseLeftClick()  # CP
         rec = Rect(200, 300, 125, 50)  # CP
         if rec.collidepoint(position):  # CP
+            core.memory("partie").joueur.nbVie = 3
+            core.memory("partie").joueur.pos = Vector2(400, 250)  # Remettre le joueur a sa place
+            core.memory("partie").joueur.orientation = Vector2(0, -1)  # Remettre le joueur a sla bonne orientation
+            core.memory("partie").joueur.vitesse = Vector2(0, 0)
+            core.memory("partie").joueur.acc = Vector2(0, 0)
+
+            for c in core.memory("mesCometes"):
+                core.memory("mesCometes").clear()
+
+            for i in range(0, 6):  # création de seulement 5 comètes
+                alea = random.randint(0, 3)  # Generation nombre aleatoire pr les zones de spawn
+                if alea == 0:  # afficher les asteroides en haut
+                    position_x = random.randint(0, 800)
+                    position_y = -10
+                if alea == 1:  # afficher les ateroides en Bas
+                    position_x = random.randint(0, 800)
+                    position_y = 510
+                if alea == 2:  # afficher les asteroides a Gauche
+                    position_x = -10
+                    position_y = random.randint(0, 500)
+                if alea == 3:  # afficher les asteroides a Droite
+                    position_x = 810
+                    position_y = random.randint(0, 500)
+                creationComete(position_x, position_y, 50,
+                               1)  # Creation asteroide avec les coordonnée x,y calculé avant
+
+            compteur = 0
+            core.memory("score", compteur)
             core.memory("etat", Etat.MENU)  # CP
 
     if core.getMouseLeftClick():  # CP
         position = core.getMouseLeftClick()  # CP
         rec = Rect(450, 300, 115, 50)  # CP
         if rec.collidepoint(position):  # CP
+            core.memory("partie").joueur.nbVie = 3
+            core.memory("partie").joueur.pos = Vector2(400, 250)  # Remettre le joueur a sa place
+            core.memory("partie").joueur.orientation = Vector2(0, -1)  # Remettre le joueur a sla bonne orientation
+            core.memory("partie").joueur.vitesse = Vector2(0,0)
+            core.memory("partie").joueur.acc = Vector2(0, 0)
+
+            for c in core.memory("mesCometes"):
+                core.memory("mesCometes").clear()
+
+
+            for i in range(0, 6):  # création de seulement 5 comètes
+                alea = random.randint(0, 3)  # Generation nombre aleatoire pr les zones de spawn
+                if alea == 0:  # afficher les asteroides en haut
+                    position_x = random.randint(0, 800)
+                    position_y = -10
+                if alea == 1:  # afficher les ateroides en Bas
+                    position_x = random.randint(0, 800)
+                    position_y = 510
+                if alea == 2:  # afficher les asteroides a Gauche
+                    position_x = -10
+                    position_y = random.randint(0, 500)
+                if alea == 3:  # afficher les asteroides a Droite
+                    position_x = 810
+                    position_y = random.randint(0, 500)
+                creationComete(position_x, position_y, 50,1)  # Creation asteroide avec les coordonnée x,y calculé avant
+
+            compteur = 0
+            core.memory("score", compteur)
             core.memory("etat", Etat.JEU)  # CP
 
     if core.getKeyPressList("RETURN"):
@@ -233,7 +304,7 @@ def setup():
         if alea == 3:  # afficher les asteroides a Droite
             position_x = 810
             position_y = random.randint(0, 500)
-        creationComete(position_x, position_y, 50) #Creation asteroide avec les coordonnée x,y calculé avant
+        creationComete(position_x, position_y, 50, 1) #Creation asteroide avec les coordonnée x,y calculé avant
     print("End setup")
 
 
