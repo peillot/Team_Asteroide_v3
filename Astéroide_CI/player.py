@@ -16,7 +16,7 @@ class Player:
         self.vitesse = Vector2(1,0)
         self.orientation = Vector2(0, -1) #permet de dessiner le triangle et pouvoir deplacer le joueur
         self.frottement = Vector2()
-        self.color = (255,0,0)
+        self.color = (255,0,10)
         self.nbVie = 3
         #self.posVie = Vector2(700,30)
         self.rayon = 40
@@ -106,7 +106,7 @@ class Player:
                 core.memory("texture").load()
                 core.memory("texture").show()
 
-            core.memory("texture", core.Texture("./coeur_vie.png", (700, 10), 0, (45, 45)))
+            core.memory("texture", core.Texture("./coeur_vie.png", (710, 10), 0, (45, 45)))
             if not core.memory("texture").ready:
                 core.memory("texture").load()
                 core.memory("texture").show()
@@ -116,6 +116,8 @@ class Player:
             if not core.memory("texture").ready:
                 core.memory("texture").load()
                 core.memory("texture").show()
+
+        core.Draw.rect((255,0,10), (670, 5, 125, 55), 2)
 
 
 
