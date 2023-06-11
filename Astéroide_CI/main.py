@@ -7,6 +7,7 @@ from pygame import Vector2
 from pygame.rect import Rect
 
 import core
+from Astéroide_CI.bonus import Bonus
 from Astéroide_CI.comete import Comete
 from Astéroide_CI.partie import Partie
 from Astéroide_CI.etat import Etat
@@ -26,6 +27,13 @@ def creationProjectile():
     proj.position = Vector2(core.memory("partie").joueur.pos) + 35*core.memory("partie").joueur.orientation
     proj.acc = Vector2(core.memory("partie").joueur.orientation)
     core.memory("mesProjectiles").append(proj)
+
+def creationBonus(position_x, position_y):
+    bonus = Bonus()
+    bonus.position = Vector2(position_x, position_y)
+    bonus.acc = Vector2(random.uniform(-1,1), random.uniform(-1,1)) #On attribut une acceleration aleatoire
+    core.memory("lesBonus").append(bonus)
+
 
 
 def afficherMENU():
@@ -145,11 +153,6 @@ def afficherJEU():
     compteur = (core.memory("score"))
     core.Draw.text((255,255,255),"POINTS: ", (10,15), 20, "Arcade Normal")
 
-    #if core.getMouseLeftClick():                        #CP
-     #   position = core.getMouseLeftClick()             #CP
-      #  rec = Rect(0,350,40,40)                         #CP
-       # if rec.collidepoint(position):                  #CP
-            #core.memory("etat", Etat.GAMEOVER)          #CP
 
     for c in core.memory("mesCometes"):
         c.draw()
@@ -224,10 +227,24 @@ def afficherJEU():
 
             if core.memory("partie").joueur.nbVie == 0: #Si on a plus de vie alors game over
                 core.memory("etat", Etat.GAMEOVER)
+    if not core.memory("lesBonus"):
+        for b in range(0, 1):
+            position_x = random.randint(10, 790)
+            position_y = random.randint(10, 490)
+            creationBonus(position_x, position_y)  # creation du Bonus
 
+    if core.memory("partie").joueur.nbVie ==1:
+        for b in core.memory("lesBonus"):
+            b.show()
+            b.deplacement()
+
+    for b in core.memory("lesBonus"):
+        res = b.collision(core.memory("partie").joueur)
+        if res:
+            core.memory("partie").joueur.nbVie +=1  # On ajoute une vie des qu'on touche le bonus
+            core.memory("lesBonus").remove(b)
 
     core.Draw.text((255, 255, 255), str(core.memory("score")), (150, 15), 20, "Arcade Normal")
-
 
 def afficherGAMEOVER():
     core.memory("texture", core.Texture("./Planete.jpg", Vector2(0, 0), 0, [800, 500]))
@@ -343,7 +360,14 @@ def setup():
     core.memory("mesCometes", [])  # Creation d'une liste de taille inconnue
 
     core.memory("mesProjectiles", [])
+
+    core.memory("lesBonus", [])
     core.memory ("score",0)
+
+    for b in range(0,1):
+        position_x = random.randint(10,790)
+        position_y = random.randint(10,490)
+        creationBonus(position_x, position_y) #creation du Bonus
 
     for i in range(0,6): #création de seulement 5 comètes
         alea = random.randint(0, 3) #Generation nombre aleatoire pr les zones de spawn

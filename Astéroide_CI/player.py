@@ -43,10 +43,6 @@ class Player:
         self.pos += self.acc
         self.acc = self.acc * 0.99
 
-
-    def comptage(self):
-        pass
-
     def show(self):
         #core.memory("texture", core.Texture("./vaisseau.png", self.pos, 0, (60,60)))
         #if not core.memory("texture").ready:
